@@ -8,7 +8,7 @@ namespace Utilities
 
         public static string[] GetInput(Stopwatch stopwatch, int day, int puzzle, string title)
         {
-            Console.WriteLine($"{stars}Advent of Code 2023 Day {day} Puzzle {puzzle}: {title}");
+            Console.WriteLine($"{stars}Advent of Code 2015 Day {day} Puzzle {puzzle}: {title}");
             string[] lines = File.ReadAllLines("Input.txt");
             stopwatch.Restart();
             return lines;
