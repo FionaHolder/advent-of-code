@@ -86,7 +86,7 @@ namespace Day06
                 toggle 0,0 through 999,999 would increase the total brightness by 2000000.
              */
 
-            rows = AoCUtils.GetInput(stopwatch, day: 6, puzzle: 1, title: "Probably a Fire Hazard");
+            rows = AoCUtils.GetInput(stopwatch, day: 6, puzzle: 2, title: "Probably a Fire Hazard");
 
             var lightBrightness = new int[1000, 1000];
             int total = 0;
