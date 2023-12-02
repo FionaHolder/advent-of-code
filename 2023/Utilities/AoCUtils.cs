@@ -9,7 +9,6 @@ namespace Utilities
         public static string[] GetInput(Stopwatch stopwatch, int day, int puzzle, string title)
         {
             Console.WriteLine($"{stars}Advent of Code Day {day} Puzzle {puzzle}: {title}");
-            Console.WriteLine("Reading input...");
             string[] lines = File.ReadAllLines("Input.txt");
             stopwatch.Restart();
             return lines;
