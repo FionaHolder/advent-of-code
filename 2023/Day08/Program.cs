@@ -59,27 +59,27 @@ namespace Day08
                 });
             }
 
-            //Map current = maps.First(m => m.Label == "AAA");
-            //int steps = 0;
+            Map current = maps.First(m => m.Label == "AAA");
+            int steps = 0;
 
-            //while (current.Label != "ZZZ")
-            //{
-            //    foreach (char instruction in instructions)
-            //    {
-            //        if (instruction == 'L')
-            //        {
-            //            current = maps.First(m => m.Label == current.Left);
-            //        }
-            //        else if (instruction == 'R')
-            //        {
-            //            current = maps.First(m => m.Label == current.Right);
-            //        }
+            while (current.Label != "ZZZ")
+            {
+                foreach (char instruction in instructions)
+                {
+                    if (instruction == 'L')
+                    {
+                        current = maps.First(m => m.Label == current.Left);
+                    }
+                    else if (instruction == 'R')
+                    {
+                        current = maps.First(m => m.Label == current.Right);
+                    }
 
-            //        steps++;
-            //    }
-            //}
+                    steps++;
+                }
+            }
 
-            //AoCUtils.WriteOutput(stopwatch, steps.ToString());
+            AoCUtils.WriteOutput(stopwatch, steps.ToString());
 
             /*
              * --- Part Two ---
@@ -117,30 +117,56 @@ namespace Day08
 
             rows = AoCUtils.GetInput(stopwatch, day: 8, puzzle: 2, title: "Haunted Wasteland");
 
-            int steps = 0;
+            List<long> mapSteps = new List<long>();
             List<Map> currentMaps = maps.Where(m => m.Label.EndsWith("A")).ToList();
 
-            while (currentMaps.Any(m => !m.Label.EndsWith("Z")))
+            foreach(Map map in currentMaps)
+            {
+                mapSteps.Add(FindSteps(stopwatch, instructions, maps, map));
+            }
+
+            static long LCM(long[] numbers)
+            {
+                return numbers.Aggregate(lcm);
+            }
+            static long lcm(long a, long b)
+            {
+                return Math.Abs(a * b) / GCD(a, b);
+            }
+            static long GCD(long a, long b)
+            {
+                return b == 0 ? a : GCD(b, a % b);
+            }
+
+            AoCUtils.WriteOutput(stopwatch, LCM(mapSteps.ToArray()).ToString());
+
+        }
+
+        private static int FindSteps(Stopwatch stopwatch, List<char> instructions, List<Map> maps, Map currentMap)
+        {
+            int steps = 0;
+
+            while (true)
             {
                 foreach (char instruction in instructions)
                 {
-                    for (int i = 0; i < currentMaps.Count; i++)
+                    if (instruction == 'L')
                     {
-                        if (instruction == 'L')
-                        {
-                            currentMaps[i] = maps.First(m => m.Label == currentMaps[i].Left);
-                        }
-                        else if (instruction == 'R')
-                        {
-                            currentMaps[i] = maps.First(m => m.Label == currentMaps[i].Right);
-                        }
+                        currentMap = maps.First(m => m.Label == currentMap.Left);
+                    }
+                    else if (instruction == 'R')
+                    {
+                        currentMap = maps.First(m => m.Label == currentMap.Right);
                     }
 
                     steps++;
+
+                    if (currentMap.Label.EndsWith("Z"))
+                    {
+                        return steps;
+                    }
                 }
             }
-
-            AoCUtils.WriteOutput(stopwatch, steps.ToString());
         }
 
         private class Map
